@@ -1,7 +1,7 @@
 from typing import List
 
 from src.features import nlp
-from src.features.utils import clean_doc, sent_to_words, remove_stopwords, make_bigrams, make_trigrams, lemmatization
+from src.features.utils import clean_doc, sent_to_words, remove_stopwords, make_bigrams, lemmatization
 
 
 def tokenize(documents: List[str]) -> List[List[str]]:

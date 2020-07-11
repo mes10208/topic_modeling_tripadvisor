@@ -38,14 +38,6 @@ def make_bigrams(texts: List[List[str]]) -> List[List[str]]:
 	bigram_mod = gensim.models.phrases.Phraser(bigram)
 	return [bigram_mod[doc] for doc in texts]
 
-# Hacer trigrams
-def make_trigrams(texts: List[List[str]]) -> List[List[str]]:
-	bigram = gensim.models.Phrases(texts, min_count=5, threshold=100)
-	trigram = gensim.models.Phrases(bigram[texts], threshold=100)
-	bigram_mod = gensim.models.phrases.Phraser(bigram)
-	trigram_mod = gensim.models.phrases.Phraser(trigram)
-	return [trigram_mod[bigram_mod[doc]] for doc in texts]
-
 # Lematización basada en el modelo de POS de Spacy
 def lemmatization(nlp: English, texts: List[List[str]], allowed_postags: List = None) -> List[List[str]]:
 	if allowed_postags is None:

@@ -1,5 +1,6 @@
 import logging
 import gensim
+import pickle
 
 from src.data.prepare_data import read_sample, df_to_list
 from src.features.tokenize import tokenize
@@ -11,6 +12,9 @@ def train():
 	data_lemmatized = tokenize(data)
 
 	dictionary = create_dictionary(data_lemmatized)
+	with open('data/models/dictionary.pkl', 'wb') as output_file:
+		pickle.dump(dictionary, output_file)
+
 	corpus = term_document_matrix(data_lemmatized, dictionary)
 
 	lda_model = gensim.models.ldamodel.LdaModel(corpus=corpus,
@@ -24,4 +28,3 @@ def train():
 		per_word_topics=True)
 
 	lda_model.save("data/models/lda_model.pkl")
-	##logging.info('Model saved to artifact lda_model.pkl')

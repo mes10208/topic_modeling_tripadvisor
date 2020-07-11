@@ -1,19 +1,22 @@
 from typing import List
+import pickle
 
 import gensim
 from src.features.tokenize import tokenize
 from src.features.dictionary import create_dictionary, term_document_matrix
 
 def predict(sentences: List[str]):
+	with open('data/models/dictionary.pkl', 'rb') as input_file:
+		dictionary = pickle.load(input_file)
+	
 	lda_model = gensim.models.ldamodel.LdaModel.load("data/models/lda_model.pkl")
 
 	data_lemmatized = tokenize(sentences)
-	dictionary = create_dictionary(data_lemmatized)
 	corpus = term_document_matrix(data_lemmatized, dictionary)
 
 	corpus_topics = []
 	for bow in corpus:
-		bow_topics = lda_model.get_document_topics(bow)
+		bow_topics = lda_model[bow][0]
 		topics = []
 		for topic in bow_topics:
 			topic_words = []
